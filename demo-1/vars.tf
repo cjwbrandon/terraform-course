@@ -1,3 +1,4 @@
+# Using variables to store secrets
 variable "AWS_ACCESS_KEY" {
 }
 

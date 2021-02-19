@@ -7,7 +7,8 @@ resource "aws_instance" "win-example" {
   ami           = data.aws_ami.windows-ami.image_id
   instance_type = "t2.micro"
   key_name      = aws_key_pair.mykey.key_name
-  user_data     = <<EOF
+  # user data -> powershell script
+  user_data = <<EOF
 <powershell>
 net user ${var.INSTANCE_USERNAME} '${var.INSTANCE_PASSWORD}' /add /y
 net localgroup administrators ${var.INSTANCE_USERNAME} /add
@@ -29,14 +30,14 @@ EOF
 
 
   provisioner "file" {
-    source = "test.txt"
+    source      = "test.txt"
     destination = "C:/test.txt"
   }
   connection {
-    host = coalesce(self.public_ip, self.private_ip)
-    type = "winrm"
-    timeout = "10m"
-    user = var.INSTANCE_USERNAME
+    host     = coalesce(self.public_ip, self.private_ip)
+    type     = "winrm"
+    timeout  = "10m"
+    user     = var.INSTANCE_USERNAME
     password = var.INSTANCE_PASSWORD
   }
 }
