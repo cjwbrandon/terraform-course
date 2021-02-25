@@ -1,3 +1,4 @@
+# Using a module from github
 module "consul" {
   source   = "github.com/wardviaene/terraform-consul-module.git?ref=terraform-0.12"
   key_name = aws_key_pair.mykey.key_name
